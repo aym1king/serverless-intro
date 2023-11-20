@@ -1,2 +1,2 @@
-python ./iris/iris-feature-pipeline-daily.py
-python ./iris/iris-batch-inference-pipeline.py
+python iris-feature-pipeline-daily.py
+python iris-batch-inference-pipeline.py
