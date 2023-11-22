@@ -27,11 +27,11 @@ def g():
     fs = project.get_feature_store()
     
     mr = project.get_model_registry()
-    model = mr.get_model("iris_model", version=2)
+    model = mr.get_model("iris_model", version=1)
     model_dir = model.download()
     model = joblib.load(model_dir + "/iris_model.pkl")
     
-    feature_view = fs.get_feature_view(name="iris", version=2)
+    feature_view = fs.get_feature_view(name="iris", version=1)
     batch_data = feature_view.get_batch_data()
     
     y_pred = model.predict(batch_data)
