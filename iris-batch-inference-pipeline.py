@@ -10,7 +10,7 @@ if LOCAL == False:
    def f():
        g()
 
-def g0():
+def g():
     import pandas as pd
     import hopsworks
     import joblib
@@ -99,18 +99,6 @@ def g0():
         print("You need 3 different flower predictions to create the confusion matrix.")
         print("Run the batch inference pipeline more times until you get 3 different iris flower predictions") 
 
-
-def g():
-    import hopsworks
-    import pandas as pd
-
-    project = hopsworks.login()
-    fs = project.get_feature_store()
-
-    iris_df = get_random_iris_flower()
-
-    iris_fg = fs.get_feature_group(name="iris",version=1)
-    iris_fg.insert(iris_df)
     
 if __name__ == "__main__":
     if LOCAL == True :
