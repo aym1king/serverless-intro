@@ -61,7 +61,7 @@ def get_random_wine():
     wine_df = wines[pick_random]
     print(f'Wine with Quality wine_df["quality"] added')
     
-   return wine_df
+    return wine_df
 
 
 def g():
