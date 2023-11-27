@@ -59,7 +59,7 @@ def get_random_wine():
     # randomly pick one of these 7 and write it to the featurestore
     #pick_random = round(random.uniform(0,7))
     #wine_df = wines[pick_random]
-    wine_df = quality4_df
+    wine_df = quality9_df
     print(f'Wine with Quality wine_df["quality"] added')
     
     return wine_df
