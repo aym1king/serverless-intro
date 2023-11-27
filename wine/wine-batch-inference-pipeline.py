@@ -84,7 +84,7 @@ def g():
     
     predictions = history_df[['prediction']]
     labels = history_df[['label']]
-
+    print(predictions)
     # Only create the confusion matrix when our wine_predictions feature group has examples of all 7 wine qualitoes
     print("Number of different wine quality predictions to date: " + str(predictions.value_counts().count()))
     if predictions.value_counts().count() == 7:
