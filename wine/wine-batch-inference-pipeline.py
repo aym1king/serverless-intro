@@ -37,7 +37,7 @@ def g():
     
     y_pred = np.round(model.predict(batch_data))
     #print(y_pred)
-    offset = 1
+    offset = int(np.uniform(0, y_pred.size))
     wine = int(y_pred[y_pred.size-offset])
     wine_url = "https://raw.githubusercontent.com/aym1king/serverless-intro/main/wine/wine_imgs/" + str(wine) + ".png"
     print(wine_url)
