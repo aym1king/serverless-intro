@@ -57,8 +57,9 @@ def get_random_wine():
 
     wines = [quality3_df, quality4_df, quality5_df, quality6_df, quality7_df, quality8_df, quality9_df]
     # randomly pick one of these 7 and write it to the featurestore
-    pick_random = round(random.uniform(0,7))
-    wine_df = wines[pick_random]
+    #pick_random = round(random.uniform(0,7))
+    #wine_df = wines[pick_random]
+    wine_df = quality3_df
     print(f'Wine with Quality wine_df["quality"] added')
     
     return wine_df
