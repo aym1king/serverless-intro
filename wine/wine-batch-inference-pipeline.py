@@ -40,6 +40,7 @@ def g():
     offset = 1
     wine = y_pred[y_pred.size-offset]
     wine_url = "https://raw.githubusercontent.com/aym1king/serverless-intro/main/wine/wine_imgs/" + str(wine) + ".png"
+    print(wine_url)
     print("Wine quality predicted: " + str(wine))
     img = Image.open(requests.get(wine_url, stream=True).raw)            
     img.save("./latest_wine.png")
