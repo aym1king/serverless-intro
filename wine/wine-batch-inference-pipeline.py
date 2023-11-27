@@ -37,9 +37,9 @@ def g():
     
     y_pred = np.round(model.predict(batch_data))
     #print(y_pred)
-    offset = 4
+    offset = 1
     wine = int(y_pred[y_pred.size-offset])
-    wine = 4
+    wine = 9
     wine_url = "https://raw.githubusercontent.com/aym1king/serverless-intro/main/wine/wine_imgs/" + str(wine) + ".png"
     print(wine_url)
     print("Wine quality predicted: " + str(wine))
@@ -52,7 +52,7 @@ def g():
     df = wine_fg.read() 
     #print(df)
     label = int(df.iloc[-offset]["quality"])
-    label = 4
+    label = 9
     label_url = "https://raw.githubusercontent.com/aym1king/serverless-intro/main/wine/wine_imgs/" + str(label) + ".png"
     print("Wine quality actual: " + str(label))
     img = Image.open(requests.get(label_url, stream=True).raw)            
