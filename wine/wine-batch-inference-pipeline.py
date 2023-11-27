@@ -52,7 +52,7 @@ def g():
     #print(df)
     label = df.iloc[-offset]["quality"]
     label_url = "https://raw.githubusercontent.com/aym1king/serverless-intro/main/wine/wine_imgs/" + str(label) + ".png"
-    print("Wine quality actual: " + label)
+    print("Wine quality actual: " + str(label))
     img = Image.open(requests.get(label_url, stream=True).raw)            
     img.save("./actual_wine.png")
     dataset_api.upload("./actual_wine.png", "Resources/images", overwrite=True)
