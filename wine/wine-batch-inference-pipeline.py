@@ -39,7 +39,7 @@ def g():
     #print(y_pred)
     offset = 1
     wine = y_pred[y_pred.size-offset]
-    wine_url = "https://raw.githubusercontent.com/aym1king/serverless-intro/master/wine/wine_imgs/" + str(wine) + ".png"
+    wine_url = "https://raw.githubusercontent.com/aym1king/serverless-intro/main/wine/wine_imgs/" + str(wine) + ".png"
     print("Wine quality predicted: " + str(wine))
     img = Image.open(requests.get(wine_url, stream=True).raw)            
     img.save("./latest_wine.png")
@@ -50,7 +50,7 @@ def g():
     df = wine_fg.read() 
     #print(df)
     label = df.iloc[-offset]["quality"]
-    label_url = "https://raw.githubusercontent.com/aym1king/serverless-intro/master/wine/wine_imgs/" + str(label) + ".png"
+    label_url = "https://raw.githubusercontent.com/aym1king/serverless-intro/main/wine/wine_imgs/" + str(label) + ".png"
     print("Wine quality actual: " + label)
     img = Image.open(requests.get(label_url, stream=True).raw)            
     img.save("./actual_wine.png")
