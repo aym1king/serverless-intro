@@ -35,7 +35,7 @@ def g():
     feature_view = fs.get_feature_view(name="wine", version=1)
     batch_data = feature_view.get_batch_data()
     
-    y_pred = np.round(model.predict(batch_data))
+    y_pred = int(model.predict(batch_data))
     #print(y_pred)
     offset = 1
     wine = y_pred[y_pred.size-offset]
