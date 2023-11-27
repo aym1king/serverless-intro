@@ -55,7 +55,7 @@ def get_random_wine():
     quality8_df =  generate_wine(8, 12.6, 3.9, 0.8, 0.1, 0.7, 0.0, 14.8, 0.8, 0.1, 0.0, 105.0, 3.0, 212.5, 12.0, 1.0, 1.0, 3.7, 2.9, 1.1, 0.2, 14.0, 8.5)
     quality9_df = generate_wine(9, 9.1, 6.6, 0.4, 0.2, 0.5, 0.3, 10.6, 1.6, 0.0, 0.0, 57.0, 24.0, 139.0, 85.0, 1.0, 1.0, 3.4, 3.2, 0.6, 0.4, 12.9, 10.4)
 
-    wines = [quality3_df, quality4_df, quality5_df, quality6_df, quality7_df, quality8_df, quaility9_df]
+    wines = [quality3_df, quality4_df, quality5_df, quality6_df, quality7_df, quality8_df, quality9_df]
     # randomly pick one of these 7 and write it to the featurestore
     pick_random = round(random.uniform(0,7))
     wine_df = wines[pick_random]
