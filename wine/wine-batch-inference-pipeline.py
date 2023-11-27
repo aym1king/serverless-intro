@@ -22,48 +22,49 @@ def g():
     from matplotlib import pyplot
     import seaborn as sns
     import requests
+    import numpy as np
 
     project = hopsworks.login()
     fs = project.get_feature_store()
     
     mr = project.get_model_registry()
-    model = mr.get_model("iris_model", version=1)
+    model = mr.get_model("wine_model", version=1)
     model_dir = model.download()
-    model = joblib.load(model_dir + "/iris_model.pkl")
+    model = joblib.load(model_dir + "/wine_model.pkl")
     
-    feature_view = fs.get_feature_view(name="iris", version=1)
+    feature_view = fs.get_feature_view(name="wine", version=1)
     batch_data = feature_view.get_batch_data()
     
-    y_pred = model.predict(batch_data)
+    y_pred = np.round(model.predict(batch_data))
     #print(y_pred)
-    offset = 2
-    flower = y_pred[y_pred.size-offset]
-    flower_url = "https://raw.githubusercontent.com/featurestoreorg/serverless-ml-course/main/src/01-module/assets/" + flower + ".png"
-    print("Flower predicted: " + flower)
-    img = Image.open(requests.get(flower_url, stream=True).raw)            
-    img.save("./latest_iris.png")
+    offset = 1
+    wine = y_pred[y_pred.size-offset]
+    wine_url = "https://raw.githubusercontent.com/aym1king/serverless-intro/master/wine/wine_imgs/" + str(wine) + ".png"
+    print("Wine quality predicted: " + wine)
+    img = Image.open(requests.get(wine_url, stream=True).raw)            
+    img.save("./latest_wine.png")
     dataset_api = project.get_dataset_api()    
-    dataset_api.upload("./latest_iris.png", "Resources/images", overwrite=True)
+    dataset_api.upload("./latest_wine.png", "Resources/images", overwrite=True)
    
-    iris_fg = fs.get_feature_group(name="iris", version=1)
-    df = iris_fg.read() 
+    wine_fg = fs.get_feature_group(name="wine", version=1)
+    df = wine_fg.read() 
     #print(df)
-    label = df.iloc[-offset]["variety"]
-    label_url = "https://raw.githubusercontent.com/featurestoreorg/serverless-ml-course/main/src/01-module/assets/" + label + ".png"
-    print("Flower actual: " + label)
+    label = df.iloc[-offset]["quality"]
+    label_url = "https://raw.githubusercontent.com/aym1king/serverless-intro/master/wine/wine_imgs/" + str(label) + ".png"
+    print("Wine quality actual: " + label)
     img = Image.open(requests.get(label_url, stream=True).raw)            
-    img.save("./actual_iris.png")
-    dataset_api.upload("./actual_iris.png", "Resources/images", overwrite=True)
+    img.save("./actual_wine.png")
+    dataset_api.upload("./actual_wine.png", "Resources/images", overwrite=True)
     
-    monitor_fg = fs.get_or_create_feature_group(name="iris_predictions",
+    monitor_fg = fs.get_or_create_feature_group(name="wine_predictions",
                                                 version=1,
                                                 primary_key=["datetime"],
-                                                description="Iris flower Prediction/Outcome Monitoring"
+                                                description="Wine Quality Prediction/Outcome Monitoring"
                                                 )
     
     now = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
     data = {
-        'prediction': [flower],
+        'prediction': [wine],
         'label': [label],
         'datetime': [now],
        }
@@ -83,21 +84,21 @@ def g():
     predictions = history_df[['prediction']]
     labels = history_df[['label']]
 
-    # Only create the confusion matrix when our iris_predictions feature group has examples of all 3 iris flowers
-    print("Number of different flower predictions to date: " + str(predictions.value_counts().count()))
+    # Only create the confusion matrix when our wine_predictions feature group has examples of all 7 wine qualitoes
+    print("Number of different wine quality predictions to date: " + str(predictions.value_counts().count()))
     if predictions.value_counts().count() == 3:
         results = confusion_matrix(labels, predictions)
     
-        df_cm = pd.DataFrame(results, ['True Setosa', 'True Versicolor', 'True Virginica'],
-                             ['Pred Setosa', 'Pred Versicolor', 'Pred Virginica'])
+        df_cm = pd.DataFrame(results, ['True 3', 'True 4', 'True 5', 'True 6', 'True 7', 'True 8', 'True 9'],
+                                      ['Pred 3', 'Pred 4', 'Pred 5', 'Pred 6', 'Pred 7', 'Pred 8', 'Pred 9'])
     
         cm = sns.heatmap(df_cm, annot=True)
         fig = cm.get_figure()
-        fig.savefig("./confusion_matrix.png")
-        dataset_api.upload("./confusion_matrix.png", "Resources/images", overwrite=True)
+        fig.savefig("./wine_confusion_matrix.png")
+        dataset_api.upload("./wine_confusion_matrix.png", "Resources/images", overwrite=True)
     else:
-        print("You need 3 different flower predictions to create the confusion matrix.")
-        print("Run the batch inference pipeline more times until you get 3 different iris flower predictions") 
+        print("You need 7 different wine quality predictions to create the confusion matrix.")
+        print("Run the batch inference pipeline more times until you get 7 different wine quality predictions") 
 
     
 if __name__ == "__main__":
